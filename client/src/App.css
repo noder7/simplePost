@@ -3,3 +3,14 @@
   text-align: center;
   min-height: 100vh;
 }
+.nav-container {
+  background: white;
+  margin: 0 40vh 0 40vh;
+}
+.post-container{
+  /* margin-top: 10vh; */
+  background: white;
+  margin: 3vh 40vh 0 40vh;
+  height: 75vh;
+  /* border : 1px red solid; */
+}

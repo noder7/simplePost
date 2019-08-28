@@ -2,6 +2,10 @@
 
 const app = require('express')();
 const fs = require('fs');
+const bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 function getData(){
 
@@ -18,13 +22,40 @@ function getData(){
     return arrayData;
     
 }
+function getLength(){
+    let dir = fs.readdirSync('database/post');
 
+    return dir.length;
+}
 
 app.get('/post_list', (req, res)=>{
 
     res.json(getData());
 
-})
+    console.log(getLength());
+    
+
+});
+
+app.post('/post', (req, res)=>{
+
+    let title = req.body.title;
+    let objData = {
+        id: getLength()+1,
+        title: title,
+        content: "empty",
+        reply: 0,
+        views: 0,
+        date: new Date()
+    }
+    objData = JSON.stringify(objData, null, 4);
+    let filePath = 'database/post/' + (getLength() + 1) + '.json'
+    let file = fs.writeFile( filePath, objData, (err)=>{
+        if (err) throw err;
+        console.log("this file has been saved!");
+        res.redirect('/post_list');
+    });
+});
 
 app.listen(5000, (req, res)=>{
     console.log('listening on port 5000');

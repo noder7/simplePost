@@ -37,11 +37,15 @@ function PostList() {
   
   const [ posts, setPost ] = useState([]);
 
+  console.log('before useEffect');
+  
+
   async function fetchData(){
     let res = await fetch('/post_list');
     res
       .json()
-      .then( posts => setPost(posts), console.log(res) )
+      .then( posts => {setPost(posts)
+              console.log(posts);} )
       .catch( err => console.log(err) )
   }
 
@@ -49,13 +53,12 @@ function PostList() {
     fetchData();
   }, [])
 
+  console.log("after useEffect", posts);
+  
+
   return (
     
     <div>
-      <Box className='nav-container' boxShadow={2} p={5}>
-        <h3>Read data from local storage</h3>
-      </Box>
-      <Box className='post-container' boxShadow={2} p={5}>
         <Table>
           <TableHead>
             <TableRow>
@@ -74,7 +77,6 @@ function PostList() {
               </TableRow>)}
           </TableBody>
         </Table>
-      </Box>
     </div>
   );
 }
