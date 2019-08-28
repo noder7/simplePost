@@ -39,7 +39,6 @@ function PostList() {
 
   console.log('before useEffect');
   
-
   async function fetchData(){
     let res = await fetch('/post_list');
     res
@@ -54,7 +53,6 @@ function PostList() {
   }, [])
 
   console.log("after useEffect", posts);
-  
 
   return (
     
