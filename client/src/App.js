@@ -4,7 +4,7 @@ import PostList from './components/post/post-list';
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <PostList />
     </div>
   );
