@@ -2,6 +2,7 @@
 const app = require('express')();
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const dateFns = require('date-fns');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
@@ -17,7 +18,7 @@ function getData(){
         // console.log(realData);
         arrayData.push(realData);
     }
-    // console.log(arrayData);
+    // console.log(arrayData.length);
     return arrayData;
     
 }
@@ -40,8 +41,9 @@ app.get('/post_list', (req, res)=>{
 app.post('/post', (req, res)=>{
 
     console.log('post works');
-    
 
+    let date = Date.now() + 540 * 60000;
+    
     let title = req.body.title;
     let objData = {
         id: getLength()+1,
@@ -49,7 +51,7 @@ app.post('/post', (req, res)=>{
         content: "empty",
         reply: 0,
         views: 0,
-        date: new Date()
+        date: dateFns.format(date, 'yyyy.MM.dd')
     }
     objData = JSON.stringify(objData, null, 4);
     let filePath = 'database/post/' + (getLength() + 1) + '.json'

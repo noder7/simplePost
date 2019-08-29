@@ -55,12 +55,16 @@ function PostList({setRefresh, refresh}) {
   }
 
   useEffect(() => {
+    console.log("useEffect in post-list.js runs");
+    
     if(refresh){
       fetchData();
     }
     setRefresh(false);
-  }, [])
+  }, [refresh])
 
+  let min = Math.round((new Date().getTime()) / 1000);
+  console.log(min);
   console.log("after useEffect", posts);
 
   return (

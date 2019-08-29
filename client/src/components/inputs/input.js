@@ -10,6 +10,8 @@ export default function InputGroup({onClick}) {
     console.log(title);
     // console.log('rendered the entire component');
     function handleSubmit(e){
+      let min = Math.round((new Date().getTime()) / 1000);
+      console.log(min);
       e.preventDefault();
       console.log("button clicked");
       
@@ -40,10 +42,12 @@ export default function InputGroup({onClick}) {
         },
         body: JSON.stringify({title: title})
       }
-      
       await fetch('/post', options).catch( err => {
         console.error('Request failed', err)
       })
+      console.log("fetch data ends in input");
+      
+      // onClick wil change the value of refresh to 'true'
       onClick();
     }
 
