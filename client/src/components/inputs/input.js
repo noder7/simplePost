@@ -1,28 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import './input.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-export default function InputGroup() {
-
+export default function InputGroup({onClick}) {
 
     const [ value, setValue ] = useState(true);
-    
+    const [ title, setTitle ] = useState("");
+    console.log(title);
+    // console.log('rendered the entire component');
+    function handleSubmit(e){
+      e.preventDefault();
+      console.log("button clicked");
+      
+      fetchData(title);
+      console.log("after fetchdata in input");
+      
+    }
     function handleChange(e){
-        const target = e.target;
+      const target = e.target;
+      setTitle(target.value);
+      if(!target.value){
+        console.log("empty", target.value.length);
+        setValue(true);
+      }else{
+        console.log("not empty");
+        setValue(false);
+        setTitle(target.value);
+      }
+    }
+    async function fetchData(title){
+      // console.log("fetchData: ", title);
+      console.log("inputGroup fetchData runs");
 
-        if(!target.value){
-            console.log("textField is empty");
-            setValue(true);
-        }else{
-            console.log("textField is not empty");
-            setValue(false);
-        }
+      const options = {
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({title: title})
+      }
+      
+      await fetch('/post', options).catch( err => {
+        console.error('Request failed', err)
+      })
+      onClick();
     }
 
   return (
     <div>
-      <form action='/post' method='post'>
+      <form action='/post' method='post' onSubmit={handleSubmit}>
         <TextField
         name='title'
           id='outlined-full-width'
@@ -37,6 +64,7 @@ export default function InputGroup() {
             shrink: true
           }}
           onChange={ e => handleChange(e)}
+          value={title}
         />
         <Button type="submit"
         variant="contained"

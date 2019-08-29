@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
+import ChildPost from './ch_post_list';
+
 import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -8,7 +10,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import './post-list.css';
-
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,13 +34,18 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, 3.9)
 ];
 
-function PostList() {
+function PostList({setRefresh, refresh}) {
   
   const [ posts, setPost ] = useState([]);
+  const [ title, setTitle ] = useState("");
 
+  console.log(refresh);
+  
   console.log('before useEffect');
   
   async function fetchData(){
+    console.log("PostList fetchData runs");
+    
     let res = await fetch('/post_list');
     res
       .json()
@@ -49,7 +55,10 @@ function PostList() {
   }
 
   useEffect(() => {
-    fetchData();
+    if(refresh){
+      fetchData();
+    }
+    setRefresh(false);
   }, [])
 
   console.log("after useEffect", posts);
@@ -72,7 +81,10 @@ function PostList() {
                 <TableCell align='right'>{post.title}</TableCell>
                 <TableCell align='right'>{post.views}</TableCell>
                 <TableCell align='right'>{post.date}</TableCell>
+                <TableCell align='right'></TableCell>
               </TableRow>)}
+              {/* child component here */}
+              {/* <ChildPost setChildPost={}/> */}
           </TableBody>
         </Table>
     </div>

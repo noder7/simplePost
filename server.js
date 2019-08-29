@@ -1,5 +1,4 @@
 'use strict';
-
 const app = require('express')();
 const fs = require('fs');
 const bodyParser = require('body-parser');
@@ -33,11 +32,15 @@ app.get('/post_list', (req, res)=>{
     res.json(getData());
 
     console.log(getLength());
+    console.log('get works');
     
 
 });
 
 app.post('/post', (req, res)=>{
+
+    console.log('post works');
+    
 
     let title = req.body.title;
     let objData = {
