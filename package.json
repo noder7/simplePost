@@ -17,6 +17,6 @@
     "date-fns": "^2.0.1",
     "date-fns-timezone": "^0.1.4",
     "express": "^4.17.1",
-    "node-sass": "^4.12.0"
+    "node-sass": "^4.13.1"
   }
 }
